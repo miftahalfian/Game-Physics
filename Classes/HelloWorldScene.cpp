@@ -143,7 +143,7 @@ bool HelloWorld::init()
         if (shape) {
             auto node = shape->getBody()->getNode();
             
-            if (node->getName() != "alien" && node->getName() != "ground") {
+            if (node->getName() != "alien" && node->getName() != "tanah") {
                 node->removeFromParent();
             }
         }
@@ -151,6 +151,15 @@ bool HelloWorld::init()
         return true;
     };
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto listener2 = EventListenerKeyboard::create();
+    listener2->onKeyReleased = [=] (EventKeyboard::KeyCode keyCode, Event * event) {
+        if (keyCode == EventKeyboard::KeyCode::KEY_ENTER) {
+            Director::getInstance()->replaceScene(HelloWorld::createScene());
+        }
+        cocos2d::log("key pressed");
+    };
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener2, this);
     
     auto contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBegin, this);
