@@ -33,6 +33,8 @@ class HelloWorld : public cocos2d::Layer
 private:
     static PhysicsWorld* physicsWorld;
     Sprite* alien;
+    bool startCounting = false;
+    float time = 3;
 public:
     static cocos2d::Scene* createScene();
 

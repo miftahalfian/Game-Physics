@@ -171,6 +171,7 @@ bool HelloWorld::init()
 void HelloWorld::update(float dt) {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     
+    
     if (alien) {
         if (alien->getPositionX() < 0 || alien->getPositionX() > visibleSize.width ||
             alien->getPositionY() < 0) {
@@ -178,6 +179,15 @@ void HelloWorld::update(float dt) {
             //kalah
             MessageBox("YOU LOSE!", "Try Again");
             Director::getInstance()->replaceScene(HelloWorld::createScene());
+        }
+    }
+    
+    if (startCounting) {
+        time -= dt;
+        if (time <= 0) {
+            MessageBox("YOU WIN!", "Congratulation");
+            startCounting = false;
+            time = 3;
         }
     }
 }
@@ -190,7 +200,7 @@ bool HelloWorld::onContactBegin(PhysicsContact& contact) {
         if ((nodeA->getName() == "alien" && nodeB->getName() == "tanah") ||
             (nodeB->getName() == "alien" && nodeA->getName() == "tanah")) {
             //menang
-            MessageBox("YOU WIN!", "Congratulation");
+            if (!startCounting) startCounting = true;
         }
     }
     
